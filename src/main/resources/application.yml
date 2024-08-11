@@ -5,3 +5,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/auth_api
     username: admin
     password: admin123
+  jpa:
+    hibernate:
+      ddl_auto: create
+      show-sql: false
+      open-in-view: false
