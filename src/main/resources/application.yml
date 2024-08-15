@@ -8,5 +8,12 @@ spring:
   jpa:
     hibernate:
       ddl_auto: create
-      show-sql: false
-      open-in-view: false
+    show-sql: false
+    open-in-view: false
+
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:my-secret-key}
+  server:
+    url: http://localhost:8080

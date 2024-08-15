@@ -9,5 +9,4 @@ public class SpringBootRefreshTokenApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootRefreshTokenApplication.class, args);
 	}
-
 }
