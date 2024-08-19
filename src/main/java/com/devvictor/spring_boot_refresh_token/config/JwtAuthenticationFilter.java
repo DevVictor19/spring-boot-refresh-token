@@ -1,8 +1,7 @@
 package com.devvictor.spring_boot_refresh_token.config;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.devvictor.spring_boot_refresh_token.providers.JwtProvider;
-import com.devvictor.spring_boot_refresh_token.services.AuthorizationService;
+import com.devvictor.spring_boot_refresh_token.services.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtProvider jwtProvider;
 
     @Autowired
-    private AuthorizationService authorizationService;
+    private UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -34,12 +33,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getTokenFromRequest(request);
 
-        DecodedJWT decodedJWT = jwtProvider.validateToken(token);
+        String username = jwtProvider.validateAccessToken(token);
 
-        if (StringUtils.hasText(token) &&  decodedJWT != null) {
-            String username = decodedJWT.getSubject();
-
-            UserDetails user = authorizationService.loadUserByUsername(username);
+        if (StringUtils.hasText(token) &&  username != null) {
+            UserDetails user = userService.loadUserByUsername(username);
 
             var authentication = new UsernamePasswordAuthenticationToken(
                     user,

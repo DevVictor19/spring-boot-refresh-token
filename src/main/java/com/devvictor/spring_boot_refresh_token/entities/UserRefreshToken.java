@@ -6,15 +6,14 @@ import jakarta.persistence.*;
 @Table(name = "user_refresh_tokens")
 public class UserRefreshToken {
     @Id
-    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "refresh_token", nullable = false, length = 255)
     private String refreshToken;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     public Long getId() {
@@ -31,5 +30,13 @@ public class UserRefreshToken {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

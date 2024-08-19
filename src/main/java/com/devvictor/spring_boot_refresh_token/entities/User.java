@@ -23,7 +23,7 @@ public class User implements UserDetails {
     @Column(length = 25, nullable = false, unique = true)
     private String email;
 
-    @Column(length = 25, nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
