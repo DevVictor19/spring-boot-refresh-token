@@ -23,7 +23,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void signup(SignupUserDto dto) {
+    public void signup(SignupUserRequestDto dto) {
         Optional<User> user = userService.findByEmail(dto.email());
 
         if (user.isPresent()) {
@@ -32,7 +32,7 @@ public class AuthService {
 
         String hashedPwd = passwordEncoder.encode(dto.password());
 
-        CreateUserDto createUserDto = new CreateUserDto(
+        CreateUserRequestDto createUserDto = new CreateUserRequestDto(
                 dto.email(),
                 hashedPwd,
                 dto.username()
@@ -41,7 +41,7 @@ public class AuthService {
         userService.create(createUserDto);
     }
 
-    public LoginUserResponseDto login(LoginUserDto dto) {
+    public LoginUserResponseDto login(LoginUserRequestDto dto) {
         Optional<User> user = userService.findByEmail(dto.email());
 
         if (user.isEmpty()) {

@@ -1,6 +1,6 @@
 package com.devvictor.spring_boot_refresh_token.dtos;
 
-public record SignupUserDto(
+public record SignupUserRequestDto(
         String email,
         String password,
         String username

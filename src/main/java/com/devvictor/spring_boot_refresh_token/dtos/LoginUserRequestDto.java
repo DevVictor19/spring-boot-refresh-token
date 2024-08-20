@@ -1,6 +1,6 @@
 package com.devvictor.spring_boot_refresh_token.dtos;
 
-public record LoginUserDto(
+public record LoginUserRequestDto(
         String email,
         String password
 ) {

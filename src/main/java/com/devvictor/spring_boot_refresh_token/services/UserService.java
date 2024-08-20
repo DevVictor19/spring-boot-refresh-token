@@ -1,6 +1,6 @@
 package com.devvictor.spring_boot_refresh_token.services;
 
-import com.devvictor.spring_boot_refresh_token.dtos.CreateUserDto;
+import com.devvictor.spring_boot_refresh_token.dtos.CreateUserRequestDto;
 import com.devvictor.spring_boot_refresh_token.entities.User;
 import com.devvictor.spring_boot_refresh_token.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    public void create(CreateUserDto dto) {
+    public void create(CreateUserRequestDto dto) {
         var entity = new User();
         entity.setEmail(dto.email());
         entity.setPassword(dto.password());

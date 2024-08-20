@@ -1,8 +1,8 @@
 package com.devvictor.spring_boot_refresh_token.controllers;
 
-import com.devvictor.spring_boot_refresh_token.dtos.LoginUserDto;
+import com.devvictor.spring_boot_refresh_token.dtos.LoginUserRequestDto;
 import com.devvictor.spring_boot_refresh_token.dtos.LoginUserResponseDto;
-import com.devvictor.spring_boot_refresh_token.dtos.SignupUserDto;
+import com.devvictor.spring_boot_refresh_token.dtos.SignupUserRequestDto;
 import com.devvictor.spring_boot_refresh_token.exceptions.BadRequestException;
 import com.devvictor.spring_boot_refresh_token.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> signup(@RequestBody SignupUserDto dto) {
+    public ResponseEntity<Void> signup(@RequestBody SignupUserRequestDto dto) {
         if (dto == null || dto.email() == null || dto.username() == null || dto.password() == null) {
             throw new BadRequestException("Missing correct signup dto");
         }
@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginUserResponseDto> login(@RequestBody LoginUserDto dto) {
+    public ResponseEntity<LoginUserResponseDto> login(@RequestBody LoginUserRequestDto dto) {
         if (dto == null || dto.email() == null || dto.password() == null) {
             throw new BadRequestException("Missing correct login dto");
         }
