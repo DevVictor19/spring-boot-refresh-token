@@ -2,16 +2,14 @@ package com.devvictor.spring_boot_refresh_token.controllers;
 
 import com.devvictor.spring_boot_refresh_token.dtos.LoginUserRequestDto;
 import com.devvictor.spring_boot_refresh_token.dtos.LoginUserResponseDto;
+import com.devvictor.spring_boot_refresh_token.dtos.RefreshTokenResponseDto;
 import com.devvictor.spring_boot_refresh_token.dtos.SignupUserRequestDto;
 import com.devvictor.spring_boot_refresh_token.exceptions.BadRequestException;
 import com.devvictor.spring_boot_refresh_token.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -37,5 +35,11 @@ public class AuthController {
         }
 
         return ResponseEntity.ok(authService.login(dto));
+    }
+
+    @GetMapping("/refresh/{token}")
+    public ResponseEntity<RefreshTokenResponseDto> refresh(@PathVariable("token") String refreshToken) {
+
+        return ResponseEntity.ok(authService.refresh(refreshToken));
     }
 }

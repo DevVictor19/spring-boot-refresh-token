@@ -3,6 +3,7 @@ package com.devvictor.spring_boot_refresh_token.services;
 import com.devvictor.spring_boot_refresh_token.dtos.*;
 import com.devvictor.spring_boot_refresh_token.entities.User;
 import com.devvictor.spring_boot_refresh_token.exceptions.BadRequestException;
+import com.devvictor.spring_boot_refresh_token.exceptions.NotFoundException;
 import com.devvictor.spring_boot_refresh_token.exceptions.UnauthorizedException;
 import com.devvictor.spring_boot_refresh_token.providers.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,25 @@ public class AuthService {
         return new LoginUserResponseDto(
                 jwtProvider.generateAccessToken(user.get()),
                 jwtProvider.generateRefreshToken(user.get())
+        );
+    }
+
+    public RefreshTokenResponseDto refresh(String refreshToken) {
+        String username = jwtProvider.validateRefreshToken(refreshToken);
+
+        if (username == null) {
+            throw new UnauthorizedException("Invalid refresh token, please login");
+        }
+
+        User user = (User) userService.loadUserByUsername(username);
+
+        if (user == null) {
+            throw new NotFoundException("User not registered");
+        }
+
+        return new RefreshTokenResponseDto(
+                jwtProvider.generateAccessToken(user),
+                jwtProvider.generateRefreshToken(user)
         );
     }
 }
