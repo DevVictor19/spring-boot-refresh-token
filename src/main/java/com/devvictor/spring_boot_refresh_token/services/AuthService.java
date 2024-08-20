@@ -18,9 +18,6 @@ public class AuthService {
     private UserService userService;
 
     @Autowired
-    private UserRefreshTokenService userRefreshTokenService;
-
-    @Autowired
     private JwtProvider jwtProvider;
 
     @Autowired
@@ -57,19 +54,9 @@ public class AuthService {
             throw new UnauthorizedException();
         }
 
-        String accessToken = jwtProvider.generateAccessToken(user.get());
-        String refreshToken = jwtProvider.generateRefreshToken(user.get());
-
-        var createUserRefreshTokenDto = new CreateUserRefreshTokenDto(
-                user.get(),
-                refreshToken
-        );
-
-        userRefreshTokenService.save(createUserRefreshTokenDto);
-
         return new LoginUserResponseDto(
-                accessToken,
-                refreshToken
+                jwtProvider.generateAccessToken(user.get()),
+                jwtProvider.generateRefreshToken(user.get())
         );
     }
 }

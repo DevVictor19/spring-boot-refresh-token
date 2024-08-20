@@ -34,10 +34,6 @@ public class User implements UserDetails {
     )
     private Set<Permission> permissions;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private UserRefreshToken userRefreshToken;
-
     public Long getId() {
         return id;
     }
